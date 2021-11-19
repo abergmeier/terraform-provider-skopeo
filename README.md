@@ -1,1 +1,7 @@
-# terraform-provider-skopeo
+# Terraform provider for Remote Container Images
+
+In implementation scope is all that Skopeo can do.
+
+## Skopeo version
+Since Skopeo can not be imported as a package we use a fork of Skopeo 1.5.1 with minor changes.
+
