@@ -31,7 +31,7 @@ jobs:
       - name: Build
         run: |
           go build -gcflags '-trimpath' -ldflags "-s -w -X main.version=${GITHUB_REF_NAME} -X main.commit=${GITHUB_SHA}"
-        workdir: cmd/terraform-provider-skopeo
+        working-directory: cmd/terraform-provider-skopeo
   goreleaser:
     needs: builder
     runs-on: ubuntu-latest
