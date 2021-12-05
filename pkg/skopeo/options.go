@@ -9,7 +9,7 @@ import (
 var defaultUserAgent = "terraform-skopeo/1.5.1"
 
 type GlobalOptions struct {
-	debug              bool          // Enable debug output
+	Debug              bool          // Enable debug output
 	policyPath         string        // Path to a signature verification policy file
 	insecurePolicy     bool          // Use an "allow everything" signature verification policy
 	registriesDirPath  string        // Path to a "registries.d" registry configuration directory

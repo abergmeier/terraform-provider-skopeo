@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/abergmeier/terraform-provider-skopeo/internal/providerlog"
+	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
 )
 
 func TestCopy(t *testing.T) {
@@ -22,21 +23,21 @@ func TestCopy(t *testing.T) {
 	writeDir := t.TempDir()
 	result, err := Copy(context.TODO(), "docker://alpine:latest", fmt.Sprintf("dir:%s", writeDir), &CopyOptions{
 		ReportWriter: reportWriter,
-		SrcImage: &ImageOptions{
-			DockerImageOptions: DockerImageOptions{
-				Global: &GlobalOptions{
-					debug: true,
+		SrcImage: &skopeoPkg.ImageOptions{
+			DockerImageOptions: skopeoPkg.DockerImageOptions{
+				Global: &skopeoPkg.GlobalOptions{
+					Debug: true,
 				},
-				Shared: &SharedImageOptions{},
+				Shared: &skopeoPkg.SharedImageOptions{},
 			},
 		},
-		DestImage: &ImageDestOptions{
-			ImageOptions: &ImageOptions{
-				DockerImageOptions: DockerImageOptions{
-					Global: &GlobalOptions{
-						debug: true,
+		DestImage: &skopeoPkg.ImageDestOptions{
+			ImageOptions: &skopeoPkg.ImageOptions{
+				DockerImageOptions: skopeoPkg.DockerImageOptions{
+					Global: &skopeoPkg.GlobalOptions{
+						Debug: true,
 					},
-					Shared: &SharedImageOptions{},
+					Shared: &skopeoPkg.SharedImageOptions{},
 				},
 			},
 		},

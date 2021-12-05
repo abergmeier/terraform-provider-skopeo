@@ -14,7 +14,7 @@ type DeleteOptions struct {
 }
 
 func Delete(ctx context.Context, imageName string, opts *DeleteOptions) error {
-	if err := reexecIfNecessaryForImages(imageName); err != nil {
+	if err := ReexecIfNecessaryForImages(imageName); err != nil {
 		return err
 	}
 
@@ -23,7 +23,7 @@ func Delete(ctx context.Context, imageName string, opts *DeleteOptions) error {
 		return fmt.Errorf("Invalid source name %s: %v", imageName, err)
 	}
 
-	sys, err := opts.Image.newSystemContext()
+	sys, err := opts.Image.NewSystemContext()
 	if err != nil {
 		return err
 	}

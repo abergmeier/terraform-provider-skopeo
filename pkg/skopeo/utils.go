@@ -64,9 +64,9 @@ type ImageOptions struct {
 	dockerDaemonHost string // docker-daemon: host to connect to
 }
 
-// newSystemContext returns a *types.SystemContext corresponding to opts.
+// NewSystemContext returns a *types.SystemContext corresponding to opts.
 // It is guaranteed to return a fresh instance, so it is safe to make additional updates to it.
-func (opts *ImageOptions) newSystemContext() (*types.SystemContext, error) {
+func (opts *ImageOptions) NewSystemContext() (*types.SystemContext, error) {
 	// *types.SystemContext instance from globalOptions
 	//  imageOptions option overrides the instance if both are present.
 	ctx := opts.Global.newSystemContext()
@@ -130,7 +130,7 @@ type ImageDestOptions struct {
 // newSystemContext returns a *types.SystemContext corresponding to opts.
 // It is guaranteed to return a fresh instance, so it is safe to make additional updates to it.
 func (opts *ImageDestOptions) newSystemContext() (*types.SystemContext, error) {
-	ctx, err := opts.ImageOptions.newSystemContext()
+	ctx, err := opts.ImageOptions.NewSystemContext()
 	if err != nil {
 		return nil, err
 	}
@@ -177,23 +177,23 @@ func getDockerAuth(creds string) (*types.DockerAuthConfig, error) {
 	}, nil
 }
 
-// parseImageSource converts image URL-like string to an ImageSource.
+// ParseImageSource converts image URL-like string to an ImageSource.
 // The caller must call .Close() on the returned ImageSource.
-func parseImageSource(ctx context.Context, opts *ImageOptions, name string) (types.ImageSource, error) {
+func ParseImageSource(ctx context.Context, opts *ImageOptions, name string) (types.ImageSource, error) {
 	ref, err := alltransports.ParseImageName(name)
 	if err != nil {
 		return nil, err
 	}
-	sys, err := opts.newSystemContext()
+	sys, err := opts.NewSystemContext()
 	if err != nil {
 		return nil, err
 	}
 	return ref.NewImageSource(ctx, sys)
 }
 
-// parseManifestFormat parses format parameter for copy and sync command.
+// ParseManifestFormat parses format parameter for copy and sync command.
 // It returns string value to use as manifest MIME type
-func parseManifestFormat(manifestFormat string) (string, error) {
+func ParseManifestFormat(manifestFormat string) (string, error) {
 	switch manifestFormat {
 	case "oci":
 		return imgspecv1.MediaTypeImageManifest, nil

@@ -11,14 +11,15 @@ import (
 	"github.com/containers/image/v5/manifest"
 	"github.com/containers/image/v5/transports/alltransports"
 
+	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
 	encconfig "github.com/containers/ocicrypt/config"
 	enchelpers "github.com/containers/ocicrypt/helpers"
 )
 
 type CopyOptions struct {
 	ReportWriter      io.Writer
-	SrcImage          *ImageOptions
-	DestImage         *ImageDestOptions
+	SrcImage          *skopeoPkg.ImageOptions
+	DestImage         *skopeoPkg.ImageDestOptions
 	RetryOpts         *retry.RetryOptions
 	AdditionalTags    []string // For docker-archive: destinations, in addition to the name:tag specified as destination, also add these
 	removeSignatures  bool     // Do not copy signatures from the source image
@@ -37,7 +38,7 @@ type CopyResult struct {
 
 func Copy(ctx context.Context, sourceImageName, destinationImageName string, opts *CopyOptions) (*CopyResult, error) {
 
-	if err := reexecIfNecessaryForImages(sourceImageName, destinationImageName); err != nil {
+	if err := skopeoPkg.ReexecIfNecessaryForImages(sourceImageName, destinationImageName); err != nil {
 		return nil, err
 	}
 
@@ -58,18 +59,18 @@ func Copy(ctx context.Context, sourceImageName, destinationImageName string, opt
 		return nil, fmt.Errorf("Invalid destination name %s: %v", destinationImageName, err)
 	}
 
-	sourceCtx, err := opts.SrcImage.newSystemContext()
+	sourceCtx, err := opts.SrcImage.NewSystemContext()
 	if err != nil {
 		return nil, err
 	}
-	destinationCtx, err := opts.DestImage.newSystemContext()
+	destinationCtx, err := opts.DestImage.NewSystemContext()
 	if err != nil {
 		return nil, err
 	}
 
 	var manifestType string
 	if opts.format != "" {
-		manifestType, err = parseManifestFormat(opts.format)
+		manifestType, err = skopeoPkg.ParseManifestFormat(opts.format)
 		if err != nil {
 			return nil, err
 		}

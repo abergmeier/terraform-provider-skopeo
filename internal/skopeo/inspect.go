@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
 	"github.com/containers/common/pkg/retry"
 	"github.com/containers/image/v5/manifest"
 	"github.com/containers/image/v5/types"
@@ -12,7 +13,7 @@ import (
 )
 
 type InspectOptions struct {
-	Image         *ImageOptions
+	Image         *skopeoPkg.ImageOptions
 	retryOpts     *retry.RetryOptions
 	format        string
 	raw           bool // Output the raw manifest instead of parsing information about the image
@@ -28,7 +29,7 @@ func Inspect(ctx context.Context, imageName string, opts *InspectOptions) (out *
 	var err error
 	var src types.ImageSource
 	if err := retry.RetryIfNecessary(ctx, func() error {
-		src, err = parseImageSource(ctx, opts.Image, imageName)
+		src, err = skopeoPkg.ParseImageSource(ctx, opts.Image, imageName)
 		return err
 	}, opts.retryOpts); err != nil {
 		return nil, errors.Wrapf(err, "Error parsing image name %q", imageName)

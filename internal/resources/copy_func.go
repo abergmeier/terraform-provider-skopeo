@@ -8,6 +8,7 @@ import (
 
 	"github.com/abergmeier/terraform-provider-skopeo/internal/providerlog"
 	"github.com/abergmeier/terraform-provider-skopeo/internal/skopeo"
+	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
 	"github.com/containers/common/pkg/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -78,7 +79,7 @@ func delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.
 		return diag.Errorf("GitHub does not support deleting specific container images. Set keep_image to true.")
 	}
 
-	return diag.FromErr(skopeo.Delete(ctx, destination, newDeleteOptions(d)))
+	return diag.FromErr(skopeoPkg.Delete(ctx, destination, newDeleteOptions(d)))
 }
 
 func exists(d *schema.ResourceData, meta interface{}) (bool, error) {
@@ -118,22 +119,22 @@ func newCopyOptions(d *schema.ResourceData, reportWriter *providerlog.ProviderLo
 	return opts
 }
 
-func newDeleteOptions(d *schema.ResourceData) *skopeo.DeleteOptions {
-	opts := &skopeo.DeleteOptions{
+func newDeleteOptions(d *schema.ResourceData) *skopeoPkg.DeleteOptions {
+	opts := &skopeoPkg.DeleteOptions{
 		Image: newImageDestOptions(d).ImageOptions,
 	}
 	return opts
 }
 
-func newGlobalOptions() *skopeo.GlobalOptions {
-	opts := &skopeo.GlobalOptions{}
+func newGlobalOptions() *skopeoPkg.GlobalOptions {
+	opts := &skopeoPkg.GlobalOptions{}
 	return opts
 }
 
-func newImageDestOptions(d *schema.ResourceData) *skopeo.ImageDestOptions {
-	opts := &skopeo.ImageDestOptions{
-		ImageOptions: &skopeo.ImageOptions{
-			DockerImageOptions: skopeo.DockerImageOptions{
+func newImageDestOptions(d *schema.ResourceData) *skopeoPkg.ImageDestOptions {
+	opts := &skopeoPkg.ImageDestOptions{
+		ImageOptions: &skopeoPkg.ImageOptions{
+			DockerImageOptions: skopeoPkg.DockerImageOptions{
 				Global:       newGlobalOptions(),
 				Shared:       newSharedImageOptions(),
 				AuthFilePath: os.Getenv("REGISTRY_AUTH_FILE"),
@@ -143,9 +144,9 @@ func newImageDestOptions(d *schema.ResourceData) *skopeo.ImageDestOptions {
 	return opts
 }
 
-func newImageOptions(d *schema.ResourceData) *skopeo.ImageOptions {
-	opts := &skopeo.ImageOptions{
-		DockerImageOptions: skopeo.DockerImageOptions{
+func newImageOptions(d *schema.ResourceData) *skopeoPkg.ImageOptions {
+	opts := &skopeoPkg.ImageOptions{
+		DockerImageOptions: skopeoPkg.DockerImageOptions{
 			Global:       newGlobalOptions(),
 			Shared:       newSharedImageOptions(),
 			AuthFilePath: os.Getenv("REGISTRY_AUTH_FILE"),
@@ -166,7 +167,7 @@ func newRetyOptions() *retry.RetryOptions {
 	return opts
 }
 
-func newSharedImageOptions() *skopeo.SharedImageOptions {
-	opts := &skopeo.SharedImageOptions{}
+func newSharedImageOptions() *skopeoPkg.SharedImageOptions {
+	opts := &skopeoPkg.SharedImageOptions{}
 	return opts
 }

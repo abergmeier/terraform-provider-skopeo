@@ -3,18 +3,20 @@ package skopeo
 import (
 	"context"
 	"testing"
+
+	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
 )
 
 func TestInspect(t *testing.T) {
 	t.Parallel()
 
 	out, err := Inspect(context.TODO(), "docker://alpine:latest", &InspectOptions{
-		Image: &ImageOptions{
-			DockerImageOptions: DockerImageOptions{
-				Global: &GlobalOptions{
-					debug: true,
+		Image: &skopeoPkg.ImageOptions{
+			DockerImageOptions: skopeoPkg.DockerImageOptions{
+				Global: &skopeoPkg.GlobalOptions{
+					Debug: true,
 				},
-				Shared: &SharedImageOptions{},
+				Shared: &skopeoPkg.SharedImageOptions{},
 			},
 		},
 	})
