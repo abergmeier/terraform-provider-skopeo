@@ -3,6 +3,8 @@ package providerlog
 import (
 	"fmt"
 	"io"
+	"strings"
+	"unicode"
 )
 
 type ProviderLogWriter struct {
@@ -23,8 +25,8 @@ func (w *ProviderLogWriter) Write(p []byte) (n int, err error) {
 		}
 
 		w.line = append(w.line, p[start:i]...)
-		fmt.Fprintf(w.w, "[DEBUG] %s\n", w.line)
-		w.line = w.line[:]
+		w.println(w.line)
+		w.line = w.line[:0]
 		start = i
 	}
 
@@ -35,6 +37,18 @@ func (w *ProviderLogWriter) Write(p []byte) (n int, err error) {
 }
 
 func (w *ProviderLogWriter) Close() error {
-	fmt.Fprintf(w.w, "[DEBUG] %s\n", w.line)
+	w.println(w.line)
 	return nil
+}
+
+// println assumes input has no linebreaks. It trims right spaces
+// and writes the line. The line gets a [DEBUG] prefix. This is convention
+// by Terraform.
+func (w *ProviderLogWriter) println(bs []byte) {
+	trimmed := strings.TrimRightFunc(string(bs), unicode.IsSpace)
+	if trimmed == "" {
+		return
+	}
+	// TODO: Handle possible error
+	fmt.Fprintf(w.w, "[DEBUG] %s\n", trimmed)
 }
