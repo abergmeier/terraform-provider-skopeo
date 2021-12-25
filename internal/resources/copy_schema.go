@@ -12,24 +12,23 @@ import (
 )
 
 var (
-	imageDescriptionTemplate = `Container "%s" uses a "transport":"details" format.
+	imageDescriptionTemplate = fmt.Sprintf(`specified as a "transport":"details" format.
 
 Supported transports:
-%s
-`
+%s`, "`"+strings.Join(transports.ListNames(), "`, `")+"`")
 )
 
 func CopyResource() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
 			"source_image": {
-				Description:      fmt.Sprintf(imageDescriptionTemplate, "source_image", strings.Join(transports.ListNames(), ", ")),
+				Description:      imageDescriptionTemplate,
 				Type:             schema.TypeString,
 				Required:         true,
 				ValidateDiagFunc: validateSourceImage,
 			},
 			"destination_image": {
-				Description:      fmt.Sprintf(imageDescriptionTemplate+`When working with GitHub Container registry keep_image needs to be set to true.`, "destination_image", strings.Join(transports.ListNames(), ", ")),
+				Description:      imageDescriptionTemplate + ".\nWhen working with GitHub Container registry `keep_image` needs to be set to `true`.",
 				Type:             schema.TypeString,
 				Required:         true,
 				ForceNew:         true,
@@ -47,7 +46,7 @@ func CopyResource() *schema.Resource {
 				Type:        schema.TypeBool,
 				Optional:    true,
 				Default:     false,
-				Description: "keep image when Resource gets deleted. This currently needs to be set to true` when working with GitHub Container registry.",
+				Description: "keep image when Resource gets deleted. This currently needs to be set to `true` when working with GitHub Container registry.",
 			},
 			"docker_digest": {
 				Type:     schema.TypeString,
