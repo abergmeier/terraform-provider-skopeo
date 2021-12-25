@@ -3,7 +3,6 @@ package skopeo
 import (
 	"context"
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/containers/image/v5/manifest"
@@ -12,27 +11,11 @@ import (
 	"github.com/containers/image/v5/types"
 	imgspecv1 "github.com/opencontainers/image-spec/specs-go/v1"
 	"github.com/pkg/errors"
-	"github.com/spf13/cobra"
 )
 
 // errorShouldDisplayUsage is a subtype of error used by command handlers to indicate that cli.ShowSubcommandHelp should be called.
 type errorShouldDisplayUsage struct {
 	error
-}
-
-// commandAction intermediates between the RunE interface and the real handler,
-// primarily to ensure that cobra.Command is not available to the handler, which in turn
-// makes sure that the cmd.Flags() etc. flag access functions are not used,
-// and everything is done using the *Options structures and the *Var() methods of cmd.Flag().
-// handler may return errorShouldDisplayUsage to cause c.Help to be called.
-func commandAction(handler func(args []string, stdout io.Writer) error) func(cmd *cobra.Command, args []string) error {
-	return func(c *cobra.Command, args []string) error {
-		err := handler(args, c.OutOrStdout())
-		if _, ok := err.(errorShouldDisplayUsage); ok {
-			c.Help()
-		}
-		return err
-	}
 }
 
 // SharedImageOptions collects CLI flags which are image-related, but do not change across images.
@@ -227,10 +210,3 @@ Flags:
 {{.LocalFlags.FlagUsages | trimTrailingWhitespaces}}{{end}}{{if .HasAvailableInheritedFlags}}
 {{end}}
 `
-
-// adjustUsage uses usageTemplate template to get rid the GlobalOption from usage
-// and disable [flag] at the end of command usage
-func adjustUsage(c *cobra.Command) {
-	c.SetUsageTemplate(usageTemplate)
-	c.DisableFlagsInUseLine = true
-}
