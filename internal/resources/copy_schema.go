@@ -62,7 +62,6 @@ source-image and destination-image are interpreted completely independently; e.g
 		ReadContext:   read,
 		UpdateContext: update,
 		DeleteContext: delete,
-		Exists:        exists,
 	}
 }
 

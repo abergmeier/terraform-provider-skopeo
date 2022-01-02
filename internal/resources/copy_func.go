@@ -2,14 +2,17 @@ package resources
 
 import (
 	"context"
+	"errors"
 	"log"
 	"os"
 	"regexp"
+	"strings"
 
 	"github.com/abergmeier/terraform-provider-skopeo/internal/providerlog"
 	"github.com/abergmeier/terraform-provider-skopeo/internal/skopeo"
 	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
 	"github.com/containers/common/pkg/retry"
+	"github.com/containers/image/v5/storage"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -40,6 +43,11 @@ func read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Di
 
 	result, err := skopeo.Inspect(ctx, destination, newInspectOptions(d))
 	if err != nil {
+		if errors.Is(err, storage.ErrNoSuchImage) || strings.HasSuffix(err.Error(), ": manifest unknown") {
+			d.SetId("")
+			return nil
+		}
+
 		return diag.FromErr(err)
 	}
 
@@ -80,17 +88,6 @@ func delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.
 	}
 
 	return diag.FromErr(skopeoPkg.Delete(ctx, destination, newDeleteOptions(d)))
-}
-
-func exists(d *schema.ResourceData, meta interface{}) (bool, error) {
-	destination := d.Get("destination_image").(string)
-
-	_, err := skopeo.Inspect(context.TODO(), destination, newInspectOptions(d))
-	if err != nil {
-		return false, err
-	}
-
-	return true, nil
 }
 
 func getStringList(d *schema.ResourceData, key string, def []string) []string {
