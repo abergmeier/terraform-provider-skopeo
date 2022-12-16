@@ -118,7 +118,8 @@ func newCopyOptions(d *schema.ResourceData, reportWriter *providerlog.ProviderLo
 
 func newDeleteOptions(d *schema.ResourceData) *skopeoPkg.DeleteOptions {
 	opts := &skopeoPkg.DeleteOptions{
-		Image: newImageDestOptions(d).ImageOptions,
+		Image:     newImageDestOptions(d).ImageOptions,
+		RetryOpts: newRetyOptions(),
 	}
 	return opts
 }
@@ -154,7 +155,8 @@ func newImageOptions(d *schema.ResourceData) *skopeoPkg.ImageOptions {
 
 func newInspectOptions(d *schema.ResourceData) *skopeo.InspectOptions {
 	opts := &skopeo.InspectOptions{
-		Image: newImageOptions(d),
+		Image:     newImageOptions(d),
+		RetryOpts: newRetyOptions(),
 	}
 	return opts
 }

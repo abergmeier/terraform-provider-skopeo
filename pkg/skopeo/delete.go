@@ -10,7 +10,7 @@ import (
 
 type DeleteOptions struct {
 	Image     *ImageOptions
-	retryOpts *retry.RetryOptions
+	RetryOpts *retry.RetryOptions
 }
 
 func Delete(ctx context.Context, imageName string, opts *DeleteOptions) error {
@@ -30,5 +30,5 @@ func Delete(ctx context.Context, imageName string, opts *DeleteOptions) error {
 
 	return retry.RetryIfNecessary(ctx, func() error {
 		return ref.DeleteImage(ctx, sys)
-	}, opts.retryOpts)
+	}, opts.RetryOpts)
 }

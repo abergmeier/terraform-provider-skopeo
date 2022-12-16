@@ -14,7 +14,7 @@ import (
 
 type InspectOptions struct {
 	Image         *skopeoPkg.ImageOptions
-	retryOpts     *retry.RetryOptions
+	RetryOpts     *retry.RetryOptions
 	format        string
 	raw           bool // Output the raw manifest instead of parsing information about the image
 	config        bool // Output the raw config blob instead of parsing information about the image
@@ -31,7 +31,7 @@ func Inspect(ctx context.Context, imageName string, opts *InspectOptions) (out *
 	if err := retry.RetryIfNecessary(ctx, func() error {
 		src, err = skopeoPkg.ParseImageSource(ctx, opts.Image, imageName)
 		return err
-	}, opts.retryOpts); err != nil {
+	}, opts.RetryOpts); err != nil {
 		return nil, errors.Wrapf(err, "Error parsing image name %q", imageName)
 	}
 
@@ -45,7 +45,7 @@ func Inspect(ctx context.Context, imageName string, opts *InspectOptions) (out *
 	if err := retry.RetryIfNecessary(ctx, func() error {
 		rawManifest, _, err = src.GetManifest(ctx, nil)
 		return err
-	}, opts.retryOpts); err != nil {
+	}, opts.RetryOpts); err != nil {
 		return nil, errors.Wrapf(err, "Error retrieving manifest for image")
 	}
 
