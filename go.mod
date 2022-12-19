@@ -1,4 +1,4 @@
-module github.com/abergmeier/terraform-provider-skopeo
+module github.com/bsquare-corp/terraform-provider-skopeo
 
 go 1.17
 
