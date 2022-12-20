@@ -7,8 +7,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/abergmeier/terraform-provider-skopeo/internal/providerlog"
-	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
+	"github.com/bsquare-corp/terraform-provider-skopeo/internal/providerlog"
+	skopeoPkg "github.com/bsquare-corp/terraform-provider-skopeo/pkg/skopeo"
 )
 
 func TestCopy(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
+	skopeoPkg "github.com/bsquare-corp/terraform-provider-skopeo/pkg/skopeo"
 	"github.com/containers/common/pkg/retry"
 	"github.com/containers/image/v5/manifest"
 	"github.com/containers/image/v5/types"

@@ -11,7 +11,7 @@ import (
 	"github.com/containers/image/v5/manifest"
 	"github.com/containers/image/v5/transports/alltransports"
 
-	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
+	skopeoPkg "github.com/bsquare-corp/terraform-provider-skopeo/pkg/skopeo"
 	encconfig "github.com/containers/ocicrypt/config"
 	enchelpers "github.com/containers/ocicrypt/helpers"
 )

@@ -7,11 +7,11 @@ import (
 
 func TestReadMissing(t *testing.T) {
 	d := CopyResource().TestResourceData()
-	err := d.Set("source_image", "docker://ghcr.io/abergmeier/nonexistingsource")
+	err := d.Set("source_image", "docker://ghcr.io/bsquare-corp/nonexistingsource")
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = d.Set("destination_image", "docker://ghcr.io/abergmeier/nonexistingdestination")
+	err = d.Set("destination_image", "docker://ghcr.io/bsquare-corp/nonexistingdestination")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -27,7 +27,7 @@ func TestReadMissing(t *testing.T) {
 		t.Fatalf("Id not reset: %v", d)
 	}
 
-	err = d.Set("destination_image", "docker://ghcr.io/abergmeier/terraform-provider-skopeo/alpine:nonexistant")
+	err = d.Set("destination_image", "docker://ghcr.io/bsquare-corp/terraform-provider-skopeo/alpine:nonexistant")
 	if err != nil {
 		t.Fatal(err)
 	}

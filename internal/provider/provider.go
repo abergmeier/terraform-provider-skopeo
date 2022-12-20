@@ -1,8 +1,8 @@
 package provider
 
 import (
-	"github.com/abergmeier/terraform-provider-skopeo/internal/providerlog"
-	"github.com/abergmeier/terraform-provider-skopeo/internal/resources"
+	"github.com/bsquare-corp/terraform-provider-skopeo/internal/providerlog"
+	"github.com/bsquare-corp/terraform-provider-skopeo/internal/resources"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 

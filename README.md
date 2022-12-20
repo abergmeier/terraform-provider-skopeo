@@ -1,6 +1,6 @@
-[![CI](https://github.com/abergmeier/terraform-provider-skopeo/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/abergmeier/terraform-provider-skopeo/actions/workflows/ci.yaml)
+[![CI](https://github.com/bsquare-corp/terraform-provider-skopeo/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/bsquare-corp/terraform-provider-skopeo/actions/workflows/ci.yaml)
 
-# Terraform provider for Remote Container Images
+# Terraform provider for Remote Container Images (forked from abergmeier/terraform-provider-skopeo)
 
 In implementation scope is all that Skopeo can do.
 

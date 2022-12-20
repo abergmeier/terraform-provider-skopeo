@@ -8,9 +8,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/abergmeier/terraform-provider-skopeo/internal/providerlog"
-	"github.com/abergmeier/terraform-provider-skopeo/internal/skopeo"
-	skopeoPkg "github.com/abergmeier/terraform-provider-skopeo/pkg/skopeo"
+	"github.com/bsquare-corp/terraform-provider-skopeo/internal/providerlog"
+	"github.com/bsquare-corp/terraform-provider-skopeo/internal/skopeo"
+	skopeoPkg "github.com/bsquare-corp/terraform-provider-skopeo/pkg/skopeo"
 	"github.com/containers/common/pkg/retry"
 	"github.com/containers/image/v5/storage"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"

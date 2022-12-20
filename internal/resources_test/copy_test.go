@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/abergmeier/terraform-provider-skopeo/internal/provider"
+	"github.com/bsquare-corp/terraform-provider-skopeo/internal/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -67,14 +67,14 @@ func TestAccCopy(t *testing.T) {
 func testAccCopyResource(name string) string {
 	return fmt.Sprintf(`resource "skopeo_copy" "alpine_%s" {
 	source_image      = "docker://alpine"
-	destination_image = "docker://ghcr.io/abergmeier/alpine"
+	destination_image = "docker://ghcr.io/bsquare-corp/alpine"
 }`, name)
 }
 
 func testAccCopyResource_addTag(name string) string {
 	return fmt.Sprintf(`resource "skopeo_copy" "alpine_%s" {
 	source_image      = "docker://alpine"
-	destination_image = "docker://ghcr.io/abergmeier/alpine"
+	destination_image = "docker://ghcr.io/bsquare-corp/alpine"
 	additional_tags   = ["alpine:fine"]
 	keep_image        = true
 }`, name)
