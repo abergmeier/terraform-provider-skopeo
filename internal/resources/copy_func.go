@@ -129,12 +129,15 @@ func newGlobalOptions() *skopeoPkg.GlobalOptions {
 }
 
 func newImageDestOptions(d *schema.ResourceData) *skopeoPkg.ImageDestOptions {
+	token := d.Get("auth_token").(string)
 	opts := &skopeoPkg.ImageDestOptions{
 		ImageOptions: &skopeoPkg.ImageOptions{
 			DockerImageOptions: skopeoPkg.DockerImageOptions{
 				Global:       newGlobalOptions(),
 				Shared:       newSharedImageOptions(),
 				AuthFilePath: os.Getenv("REGISTRY_AUTH_FILE"),
+				RegistryToken: token,
+				
 			},
 		},
 	}
@@ -147,6 +150,7 @@ func newImageOptions(d *schema.ResourceData) *skopeoPkg.ImageOptions {
 			Global:       newGlobalOptions(),
 			Shared:       newSharedImageOptions(),
 			AuthFilePath: os.Getenv("REGISTRY_AUTH_FILE"),
+		
 		},
 	}
 	return opts

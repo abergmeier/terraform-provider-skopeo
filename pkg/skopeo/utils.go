@@ -34,7 +34,7 @@ type DockerImageOptions struct {
 	credsOption    string              // username[:password] for accessing a registry
 	userName       string              // username for accessing a registry
 	password       string              // password for accessing a registry
-	registryToken  string              // token to be used directly as a Bearer token when accessing the registry
+	RegistryToken  string              // token to be used directly as a Bearer token when accessing the registry
 	dockerCertPath string              // A directory using Docker-like *.{crt,cert,key} files for connecting to a registry or a daemon
 	noCreds        bool                // Access the registry anonymously
 }
@@ -89,8 +89,8 @@ func (opts *ImageOptions) NewSystemContext() (*types.SystemContext, error) {
 			Password: opts.password,
 		}
 	}
-	if opts.registryToken != "" {
-		ctx.DockerBearerRegistryToken = opts.registryToken
+	if opts.RegistryToken != "" {
+		ctx.DockerBearerRegistryToken = opts.RegistryToken
 	}
 	if opts.noCreds {
 		ctx.DockerAuthConfig = &types.DockerAuthConfig{}
