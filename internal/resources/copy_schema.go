@@ -48,6 +48,11 @@ func CopyResource() *schema.Resource {
 				Default:     false,
 				Description: "keep image when Resource gets deleted. This currently needs to be set to `true` when working with GitHub Container registry.",
 			},
+			"auth_token": {
+				Description:      "token for authentication acgainst gcr",
+				Type:             schema.TypeString,
+				Optional:    true,
+			},
 			"docker_digest": {
 				Type:     schema.TypeString,
 				Computed: true,
